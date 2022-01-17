@@ -11,7 +11,8 @@
         "laravel/framework": "^8.75",
         "laravel/passport": "^10.3",
         "laravel/sanctum": "^2.11",
-        "laravel/tinker": "^2.5"
+        "laravel/tinker": "^2.5",
+        "morilog/jalali": "^3.2"
     },
     "require-dev": {
         "facade/ignition": "^2.5",
@@ -22,6 +23,9 @@
         "phpunit/phpunit": "^9.5.10"
     },
     "autoload": {
+        "files": [
+            "app/Helpers/helper.php"
+        ],
         "psr-4": {
             "App\\": "app/",
             "Database\\Factories\\": "database/factories/",

@@ -20,6 +20,8 @@ class CreatePostsTable extends Migration
             $table->text('image');
             $table->tinyInteger('commentable')->default(0)->comment('0 uncommentable, 1 commentable');
             $table->timestamp('published_at');
+            $table->bigInteger('like_count')->default(0);
+            $table->bigInteger('comment_count')->default(0);
             $table->foreignId('author_id')->constrained('users')->onUpdate('cascade')->onDelete('cascade');
             $table->foreignId('category_id')->constrained('categories')->onUpdate('cascade')->onDelete('cascade');
             $table->tinyInteger('status')->default(0);

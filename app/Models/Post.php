@@ -19,12 +19,17 @@ class Post extends Model
     }
 
     /**
-     * Each post morph many comments
+     * Each post has many comments
      */
     public function comments()
     {
-        return $this->morphMany(Comment::class, 'commentable');
+        return $this->hasMany(Comment::class);
     }
 
-    protected $fillable = ['title', 'description', 'image', 'status', 'published_at', 'author_id', 'category_id', 'commentable'];
+    public function category()
+    {
+        return $this->belongsTo(Category::class, 'category_id');
+    }
+
+    protected $fillable = ['title', 'description', 'image', 'status', 'published_at', 'author_id', 'category_id'];
 }

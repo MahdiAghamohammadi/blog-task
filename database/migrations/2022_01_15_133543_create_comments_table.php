@@ -18,8 +18,7 @@ class CreateCommentsTable extends Migration
             $table->text('body');
             $table->foreignId('parent_id')->nullable()->constrained('comments')->onUpdate('cascade')->onDelete('cascade');
             $table->foreignId('author_id')->constrained('users')->onUpdate('cascade')->onDelete('cascade');
-            $table->unsignedBigInteger('commentable_id');
-            $table->string('commentable_type');
+            $table->foreignId('post_id')->constrained('posts')->onUpdate('cascade')->onDelete('cascade');
             $table->tinyInteger('seen')->default(0)->comment('0 unseen, 1 seen');
             $table->tinyInteger('approved')->default(0)->comment('0 not approved, 1 approved');
             $table->tinyInteger('status')->default(0);

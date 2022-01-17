@@ -10,9 +10,9 @@ class Comment extends Model
 {
     use HasFactory, SoftDeletes;
 
-    public function commentable()
+    public function post()
     {
-        return $this->morphTo();
+        return $this->belongsTo(Post::class);
     }
 
     /**
@@ -39,5 +39,5 @@ class Comment extends Model
         return $this->hasMany($this, 'parent_id');
     }
 
-    protected $fillable = ['body', 'parent_id', 'author_id', 'commentable_id', 'commentable_type', 'approved', 'status'];
+    protected $fillable = ['body', 'parent_id', 'author_id', 'post_id', 'approved', 'status'];
 }
