@@ -11,7 +11,7 @@ use Illuminate\Http\Request;
 class CommentController extends Controller
 {
     /**
-     * Display a listing of the resource.
+     * Display a listing of the comments.
      *
      * @return \Illuminate\Http\Response
      */
@@ -27,7 +27,7 @@ class CommentController extends Controller
     }
 
     /**
-     * Show the form for creating a new resource.
+     * Show the form for creating a new comment.
      *
      * @return \Illuminate\Http\Response
      */
@@ -37,7 +37,7 @@ class CommentController extends Controller
     }
 
     /**
-     * Store a newly created resource in storage.
+     * Store a newly created comment in storage.
      *
      * @param  \Illuminate\Http\Request  $request
      * @return \Illuminate\Http\Response
@@ -59,9 +59,9 @@ class CommentController extends Controller
     }
 
     /**
-     * Display the specified resource.
+     * Display the specified comment.
      *
-     * @param  int  $id
+     * @param  Comment $comment
      * @return \Illuminate\Http\Response
      */
     public function show(Comment $comment)
@@ -70,21 +70,21 @@ class CommentController extends Controller
     }
 
     /**
-     * Show the form for editing the specified resource.
+     * Show the form for editing the specified comment.
      *
-     * @param  int  $id
+     * @param  Comment $comment
      * @return \Illuminate\Http\Response
      */
-    public function edit($id)
+    public function edit(Comment $comment)
     {
         //
     }
 
     /**
-     * Update the specified resource in storage.
+     * Update the specified comment in storage.
      *
      * @param  \Illuminate\Http\Request  $request
-     * @param  int  $id
+     * @param  Comment $comment
      * @return \Illuminate\Http\Response
      */
     public function update(Request $request, Comment $comment)
@@ -105,16 +105,21 @@ class CommentController extends Controller
     }
 
     /**
-     * Remove the specified resource from storage.
+     * Remove the specified comment from storage.
      *
-     * @param  int  $id
+     * @param  Comment $comment
      * @return \Illuminate\Http\Response
      */
     public function destroy(Comment $comment)
     {
         //
     }
-
+    /**
+     * Change the specified comment status.
+     *
+     * @param  Comment $comment
+     * @return \Illuminate\Http\Response
+     */
     public function status(Comment $comment)
     {
         $comment->status = $comment->status == 0 ? 1 : 0;
@@ -129,6 +134,13 @@ class CommentController extends Controller
             return response()->json(['status' => false]);
         }
     }
+
+    /**
+     * Change the specified comment approves.
+     *
+     * @param  Comment $comment
+     * @return \Illuminate\Http\Response
+     */
     public function approved(Comment $comment)
     {
         $comment->approved = $comment->approved == 0 ? 1 : 0;
@@ -144,6 +156,13 @@ class CommentController extends Controller
         }
     }
 
+    /**
+     * Store a newly created answer in storage.
+     *
+     * @param  \Illuminate\Http\Request  $request
+     * @param  Comment $comment
+     * @return \Illuminate\Http\Response
+     */
     public function answer(Request $request, Comment $comment)
     {
         // Valid data

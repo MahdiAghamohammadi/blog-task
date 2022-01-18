@@ -12,6 +12,12 @@ use Illuminate\Support\Str;
 
 class UserController extends Controller
 {
+     /**
+     * Login the specified user with name, email and password.
+     *
+     * @param  Request $request
+     * @return \Illuminate\Http\Response
+     */
     public function register(Request $request)
     {
         // Valid data
@@ -31,6 +37,12 @@ class UserController extends Controller
         return new UserResource($user);
     }
 
+    /**
+     * Login the specified user with email and password.
+     *
+     * @param  Request $request
+     * @return \Illuminate\Http\Response
+     */
     public function login(Request $request)
     {
         // Valid data
@@ -56,6 +68,12 @@ class UserController extends Controller
 
     }
 
+    /**
+     * Change the specified user password.
+     *
+     * @param  Request $request
+     * @return \Illuminate\Http\Response
+     */
     public function changePassword(Request $request)
     {
         // Valid data
@@ -81,6 +99,12 @@ class UserController extends Controller
         return new UserResource(auth()->user());
     }
 
+     /**
+     * Logout the specified user.
+     *
+     * @param  Request $request
+     * @return \Illuminate\Http\Response
+     */
     public function logout()
     {
         if (auth()->user()) {
