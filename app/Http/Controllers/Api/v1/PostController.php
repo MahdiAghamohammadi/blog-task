@@ -5,6 +5,7 @@ namespace App\Http\Controllers\Api\v1;
 use App\Http\Controllers\Controller;
 use App\Http\Resources\v1\Post as PostResource;
 use App\Models\Post;
+use Carbon\Carbon;
 use Illuminate\Http\Request;
 
 class PostController extends Controller
@@ -44,7 +45,7 @@ class PostController extends Controller
             'description' => 'required|max:600|min:5|regex:/^[ا-یa-zA-Z0-9\-۰-۹ء-ي.,><\/;\n\r& ]+$/u',
             'category_id' => 'required|min:1|regex:/^[0-9]+$/u|exists:categories,id',
             'author_id' => 'required|min:1|regex:/^[0-9]+$/u|exists:users,id',
-            'image' => 'required',
+            'image' => 'required|mimes:jpg,png,jpeg|max:1024',
             'status' => 'required|numeric|in:0,1',
             'published_at' => 'required|numeric',
         ]);
@@ -53,6 +54,17 @@ class PostController extends Controller
         $realTimestampStart = substr($request->published_at, 0, 10);
         $inputs['published_at'] = date("Y-m-d H:i:s", (int) $realTimestampStart);
 
+        // get image
+        $file = $request->file('image');
+        $imagePath = 'upload/images/post';
+        $fileName = $file->getClientOriginalName();
+        if (file_exists(public_path("{$imagePath}/{$fileName}"))) {
+            $fileName = Carbon::now()->timestamp . "-{$fileName}";
+        }
+        $file->move(public_path($imagePath), $fileName);
+        $inputs['image'] = "{$imagePath}/{$fileName}";
+
+        // create post
         $post = Post::create($inputs);
 
         return new PostResource($post);
@@ -105,6 +117,7 @@ class PostController extends Controller
         $realTimestampStart = substr($request->published_at, 0, 10);
         $inputs['published_at'] = date("Y-m-d H:i:s", (int) $realTimestampStart);
 
+        // create post
         $post->update($inputs);
 
         return new PostResource($post);

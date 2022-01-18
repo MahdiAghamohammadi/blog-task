@@ -19,7 +19,7 @@ class Post extends JsonResource
                 'id' => $this->id,
                 'title' => $this->title,
                 'description' => $this->description,
-                'image' => $this->image,
+                'image' => url($this->image),
                 'author' => $this->user->name,
                 'category' => $this->category->name,
                 'published_at' => jalaliDate($this->published_at),

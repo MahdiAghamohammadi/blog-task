@@ -81,4 +81,21 @@ class UserController extends Controller
         return new UserResource(auth()->user());
     }
 
+    public function logout()
+    {
+        if (auth()->user()) {
+            $user = auth()->user();
+            $user->api_token = null;
+            $user->save();
+            return response([
+                'data' => 'شما با موفیقت از حساب خود خارج شدید',
+                'status' => 'success',
+            ]);
+        }
+        return response([
+            'data' => 'شما به حساب خود وارد نشده اید',
+            'status' => 'error',
+        ], 401);
+    }
+
 }

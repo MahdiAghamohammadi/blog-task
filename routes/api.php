@@ -23,6 +23,7 @@ Route::prefix('v1')->namespace('Api\v1')->group(function () {
         Route::post('/login', [UserController::class, 'login']);
         Route::middleware('auth:api')->group(function () {
             Route::post('/changePassword', [UserController::class, 'changePassword']);
+            Route::post('/logout', [UserController::class, 'logout']);
         });
     });
     Route::prefix('post')->group(function () {
@@ -43,6 +44,7 @@ Route::prefix('v1')->namespace('Api\v1')->group(function () {
             Route::put('/update/{comment}', [CommentController::class, 'update']);
             Route::get('/status/{comment}', [CommentController::class, 'status']);
             Route::get('/approved/{comment}', [CommentController::class, 'approved']);
+            Route::post('/answer/{comment}', [CommentController::class, 'answer']);
         });
     });
     Route::prefix('category')->group(function () {

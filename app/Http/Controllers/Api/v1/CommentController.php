@@ -143,4 +143,27 @@ class CommentController extends Controller
             return response()->json(['approved' => false]);
         }
     }
+
+    public function answer(Request $request, Comment $comment)
+    {
+        // Valid data
+        $validation = $this->validate($request, [
+            'body' => 'required|max:600|min:5|regex:/^[ا-یa-zA-Z0-9\-۰-۹ء-ي.,><\/;\n\r& ]+$/u',
+        ]);
+        if ($comment->parent == null) {
+            $inputs = $request->all();
+            $inputs['author_id'] = 1;
+            $inputs['parent_id'] = $comment->id;
+            $inputs['post_id'] = $comment->post->id;
+            $inputs['approved'] = 1;
+            $inputs['status'] = 1;
+            Comment::create($inputs);
+            return new CommentResource($comment);
+        } else {
+            return response([
+                'data' => 'شما نمیتوانید به نظر ادمین پاسخ بدهید',
+                'status' => 'error',
+            ], 403);
+        }
+    }
 }
